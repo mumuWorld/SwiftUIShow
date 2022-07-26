@@ -81,16 +81,19 @@ struct MMLinkPage: View {
 
     @State var textColor: Color = Color.yellow
 
+    @Environment(\.openURL) var openURL
+    
     var body: some View {
         VStack {
             if let url = URL(string: webStr) {
                 Link("open website: \(webStr)", destination: url)
                     .foregroundColor(textColor)
                     .font(.system(.title, weight: .heavy))
-//                    .environment(\.openURL, OpenURLAction { url in
-//                        print("Open \(url)")
-//                        return .handled
-//                    })
+                    .environment(\.openURL, OpenURLAction { url in
+                        print("Open \(url)")
+//                        openURL(url, completion: {accepted in })
+                        return .handled
+                    })
             } else {
                 Text("URL 不合法")
             }
@@ -114,6 +117,10 @@ struct MMLinkPage: View {
                 .fixedSize()
             }
         }
+    }
+    
+    func onOpenURLTap(_ url: URL, completion: @escaping (_ accepted: Bool) -> Void) {
+        openURL(url, completion: completion)
     }
 }
 

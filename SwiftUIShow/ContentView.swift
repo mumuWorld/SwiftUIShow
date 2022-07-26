@@ -48,6 +48,8 @@ struct ContentView: View {
             return MMLinkPage()
         } else if name == "S&D" {
             return MMSpacerDividerPage()
+        } else if name == "Grid" {
+            return GridPage()
         }
         return Text("unknown routerName \(name ?? "")")
     }
